@@ -54,4 +54,4 @@ export function reportServerIssue(address: string, callback?: Function): void {
   return serverCache.reportServerIssue(address, callback);
 };
 
-module.exports.messageFactory = messageFactory;
+exports.messageFactory = messageFactory;
