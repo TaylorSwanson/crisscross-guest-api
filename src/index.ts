@@ -22,8 +22,8 @@ export function start(options, readyCallback): EventEmitter {
     throw new Error("Guest init options cannot be an array, it must be an object");
   
   if (typeof options !== "object") options = {};
-  internalHost = options.host || "127.0.0.1";
-  internalPort = options.port || 15001;
+  internalHost = options.host ? options.host : "127.0.0.1";
+  internalPort = options.port ? options.port : 15001;
   
 
   // Start the cache and load initially over HTTP

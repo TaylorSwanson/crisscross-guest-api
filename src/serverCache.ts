@@ -36,7 +36,12 @@ export function listServers(type: string): any {
 // Triggers a cache reload in some form, via WS or HTTP depending on what is available
 export function triggerCacheReload(callback?) {
   // Callback will be scheduled to be triggered when the cache has been reloaded
-  if (typeof callback !== "undefined") pendingCacheCallbacks.push(callback);
+  if (typeof callback !== "undefined") {
+    if (typeof pendingCacheCallbacks === "undefined")
+      pendingCacheCallbacks = [];
+    
+    pendingCacheCallbacks.push(callback);
+  }
 
   // Use WS or HTTP to load cache
   // Each method triggers appropriate events and callbacks on their own
@@ -52,7 +57,7 @@ export function triggerCacheReload(callback?) {
 export function loadServerCacheHTTP(): void {
 
   if (typeof host !== "string" || typeof port !== "number") {
-    xxEventEmitter.emit("error", new Error("XX implementation error - no hostname or port"));
+    xxEventEmitter.emit("error", new Error(`XX implementation error - no hostname or port (${host}:${port})`));
 
     throw new Error("You must start the serverCache first with a port and hostname before use");
   }
@@ -123,7 +128,7 @@ export function updateServerCache(servers) {
 
   // Trigger any pending callbacks
   if (typeof pendingCacheCallbacks !== "undefined" && pendingCacheCallbacks.length) {
-    pendingCacheCallbacks.forEach(fn => fn(serverCache));
+    pendingCacheCallbacks.forEach(fn => fn(null, serverCache));
     pendingCacheCallbacks = [];
   }
 
@@ -161,9 +166,9 @@ export function reportServerIssue(address: string, callback?): void {
 //
 
 
-export function start(host: string, port: number) {
-  host = host;
-  port = port;
+export function start(internalHost: string, internalPort: number) {
+  host = internalHost;
+  port = internalPort;
 };
 
 export function stop() {
