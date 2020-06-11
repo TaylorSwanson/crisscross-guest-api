@@ -1,0 +1,21 @@
+{
+  "name": "crisscross-guest-api",
+  "version": "1.0.0",
+  "description": "Helper package to work with local xxhost server in Node applications",
+  "main": "dist/index.js",
+  "scripts": {
+    "install": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.3.0",
+    "xxp": "github:TaylorSwanson/xxp"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "@types/ws": "^7.2.5",
+    "source-map-support": "^0.5.19"
+  }
+}
